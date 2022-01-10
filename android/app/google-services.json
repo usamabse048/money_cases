@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "483172761882",
+    "project_id": "moneycases-4fb77",
+    "storage_bucket": "moneycases-4fb77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483172761882:android:f1e4c06cb68feafba72ca3",
+        "android_client_info": {
+          "package_name": "com.usama.money_cases"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483172761882-k67nkc7dchbdc0hc37v825t9ujm1cp6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.usama.money_cases",
+            "certificate_hash": "66f350bf0c13d91e9f7120638dbe8f21670d444f"
+          }
+        },
+        {
+          "client_id": "483172761882-9ukoje6hhk8frlfjjsr1gk8b24qhhfhn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbbgHuU1dV1LBUWO2ZaMZOLGrw33Z0ESg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483172761882-9ukoje6hhk8frlfjjsr1gk8b24qhhfhn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
