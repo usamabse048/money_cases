@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:money_cases/controllers/auth_controller.dart';
+import 'package:money_cases/models/user_model.dart';
 import 'package:money_cases/screens/home_screen.dart';
 import 'package:money_cases/screens/login_screen.dart';
 import 'package:money_cases/screens/signup_screen.dart';
+import 'package:money_cases/services/database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

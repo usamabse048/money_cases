@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   late String uid;
   late String name;
@@ -22,6 +24,16 @@ class UserModel {
         money: map['money']);
   }
 
+  factory UserModel.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    return UserModel(
+        uid: snapshot.data()?['uid'] ?? "",
+        name: snapshot.data()?['name'] ?? "",
+        phoneNumber: snapshot.data()?['phoneNumber'] ?? "",
+        email: snapshot.data()?['email'] ?? "",
+        money: snapshot.data()?['money'] ?? {});
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
@@ -30,5 +42,11 @@ class UserModel {
       'email': email,
       'money': money,
     };
+  }
+
+  void printMoneyMap() {
+    money.forEach((key, value) {
+      print("$key :: $value");
+    });
   }
 }
