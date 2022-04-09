@@ -34,6 +34,16 @@ class UserModel {
         money: snapshot.data()?['money'] ?? {});
   }
 
+  factory UserModel.fromQueryDocumentSnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
+    return UserModel(
+        uid: snapshot.data()['uid'] ?? "",
+        name: snapshot.data()['name'] ?? "",
+        phoneNumber: snapshot.data()['phoneNumber'] ?? "",
+        email: snapshot.data()['email'] ?? "",
+        money: snapshot.data()['money'] ?? {});
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,

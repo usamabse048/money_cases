@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TransactionModel {
   late String id;
   late String title;
@@ -28,6 +30,19 @@ class TransactionModel {
         creatorId: map['creatorId'],
         partnerIds: map['partnerIds'],
         amount: map['amount']);
+  }
+
+  factory TransactionModel.fromQuerySnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> queryDocumentSnapshot) {
+    return TransactionModel(
+        id: queryDocumentSnapshot.data()['id'] ?? "",
+        title: queryDocumentSnapshot.data()['title'] ?? "",
+        parteners: queryDocumentSnapshot.data()['parteners'] ?? [],
+        creator: queryDocumentSnapshot.data()['creator'] ?? "",
+        creatorId: queryDocumentSnapshot.data()['creatorId'] ?? "",
+        partnerIds: queryDocumentSnapshot.data()["partnerIds"] ?? [],
+        amount: queryDocumentSnapshot.data()["amount"] ?? 0,
+        time: queryDocumentSnapshot.data()['time']);
   }
 
   Map<String, dynamic> toMap() {

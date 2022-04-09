@@ -103,15 +103,6 @@ class Database {
         .doc(transaction.creatorId)
         .set(user.toMap());
 
-    // transaction.partnerIds.forEach((i) async {
-    //   UserModel partnerModel =
-    //       await _firestore.collection('users').doc(i).get().then((value) {
-    //     return UserModel.fromDocumentSnapshot(value);
-    //   });
-
-    //   print("print model id: ${partnerModel.uid}");
-    // });
-
     for (String i in transaction.partnerIds) {
       UserModel partnerModel =
           await _firestore.collection('users').doc(i).get().then((value) {
@@ -124,5 +115,33 @@ class Database {
 
       await _firestore.collection('users').doc(i).set(partnerModel.toMap());
     }
+  }
+
+  Stream<List<TransactionModel>> getTransactionHistory() {
+    return _firestore
+        .collection('transactions')
+        .orderBy('time')
+        .snapshots()
+        .map((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+      List<TransactionModel> retval = [];
+      querySnapshot.docs.forEach((element) {
+        retval.add(TransactionModel.fromQuerySnapshot(element));
+      });
+
+      return retval;
+    });
+  }
+
+  Stream<List<UserModel>> getAllUsers() {
+    return _firestore
+        .collection('users')
+        .snapshots()
+        .map((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+      List<UserModel> retval = [];
+      querySnapshot.docs.forEach((element) {
+        retval.add(UserModel.fromQueryDocumentSnapshot(element));
+      });
+      return retval;
+    });
   }
 }
