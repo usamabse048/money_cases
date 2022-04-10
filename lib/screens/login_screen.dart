@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:money_cases/screens/home_screen.dart';
 import 'package:money_cases/screens/signup_screen.dart';
 import 'package:money_cases/services/database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   static String route = "/loginscreen";
@@ -122,23 +124,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               print("Done");
-                              // List x = List.empty(growable: true);
-                              // x.add("Akram");
-                              // x.add("Irshad");
-                              // List<String> y = List.empty(growable: true);
-                              // y.add("JRNvRYuooeMFp5bVE8fcReer9iy2");
-                              // y.add("cjMAaGrs3NffOJkgRQnogG8FiF73");
-                              // Database db = Database();
-                              // db.addTransactionToDb(
-                              //     title: "My Transaction",
-                              //     amount: 900,
-                              //     creator: "usam",
-                              //     time: DateTime.now(),
-                              //     creatorId: "DxmXtFLl9oMVJUM1vc66WKgbtnh2",
-                              //     partners: x,
-                              //     partnerIds: y);
+                              List x = List.empty(growable: true);
+                              x.add("Akram");
+                              x.add("Irshad");
+                              List<String> y = List.empty(growable: true);
+                              y.add("JRNvRYuooeMFp5bVE8fcReer9iy2");
+                              y.add("cjMAaGrs3NffOJkgRQnogG8FiF73");
+                              Database db = Database();
+                              db.addTransactionToDb(
+                                  title: "My Transaction",
+                                  amount: 300,
+                                  creator: "usam",
+                                  time: DateTime.now(),
+                                  creatorId: "DxmXtFLl9oMVJUM1vc66WKgbtnh2",
+                                  partners: x,
+                                  partnerIds: y);
                             } else {
                               // ScaffoldMessenger(child: child)
+
+                              Navigator.pushNamed(context, HomeScreen.route);
                             }
                           },
                         ),

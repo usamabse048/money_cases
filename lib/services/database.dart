@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:money_cases/constants/global_constant.dart';
 import 'package:money_cases/models/transaction_model.dart';
 import 'package:money_cases/models/user_model.dart';
 
@@ -23,8 +24,10 @@ class Database {
         .collection("users")
         .doc(uid)
         .set(user.toMap())
-        .then((value) => print("User Added"))
-        .catchError((e) => print("Failed to add user $e"));
+        .then((value) {
+      print("User Added");
+      GlobalConstant.currentUser = user;
+    }).catchError((e) => print("Failed to add user $e"));
 
     await addNewUserToExistingUsersMoneyMap(uid, name);
   }
@@ -120,7 +123,7 @@ class Database {
   Stream<List<TransactionModel>> getTransactionHistory() {
     return _firestore
         .collection('transactions')
-        .orderBy('time')
+        .orderBy('time', descending: true)
         .snapshots()
         .map((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
       List<TransactionModel> retval = [];
@@ -132,14 +135,23 @@ class Database {
     });
   }
 
-  Stream<List<UserModel>> getAllUsers() {
+  Future<UserModel> getCurrentUser(String uid) async {
+    return await _firestore.collection('users').doc(uid).get().then((value) {
+      return UserModel.fromDocumentSnapshot(value);
+    });
+  }
+
+  Stream<List<UserModel>> getAllUsers(String currentUserId) {
     return _firestore
         .collection('users')
         .snapshots()
         .map((QuerySnapshot<Map<String, dynamic>> querySnapshot) {
       List<UserModel> retval = [];
       querySnapshot.docs.forEach((element) {
-        retval.add(UserModel.fromQueryDocumentSnapshot(element));
+        if (element.id == currentUserId) {
+        } else {
+          retval.add(UserModel.fromQueryDocumentSnapshot(element));
+        }
       });
       return retval;
     });

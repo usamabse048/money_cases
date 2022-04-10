@@ -54,9 +54,9 @@ class UserModel {
     };
   }
 
-  void printMoneyMap() {
-    money.forEach((key, value) {
-      print("$key :: $value");
-    });
-  }
+  // void printMoneyMap() {
+  //   money.forEach((key, value) {
+  //     print("$key :: $value");
+  //   });
+  // }
 }

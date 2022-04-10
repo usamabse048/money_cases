@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:money_cases/constants/controllers.dart';
+import 'package:money_cases/constants/global_constant.dart';
 import 'package:money_cases/services/database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,6 +22,13 @@ class Auth {
           uid: userCredential.user!.uid,
           name: name,
           phoneNumber: phoneNumber);
+
+      //  GlobalConstant.getCurrentUser(userCredential.user!.uid);
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString("uid", userCredential.user!.uid);
+      sharedPreferences.setString("name", name);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -32,7 +42,15 @@ class Auth {
 
   Future<void> signin({required String email, required String password}) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      GlobalConstant.getCurrentUser(userCredential.user!.uid);
+
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString("uid", userCredential.user!.uid);
+      //sharedPreferences.setString("name", name);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -46,5 +64,6 @@ class Auth {
 
   Future<void> signout() async {
     await _auth.signOut();
+    authController.clearData();
   }
 }

@@ -42,7 +42,7 @@ class TransactionModel {
         creatorId: queryDocumentSnapshot.data()['creatorId'] ?? "",
         partnerIds: queryDocumentSnapshot.data()["partnerIds"] ?? [],
         amount: queryDocumentSnapshot.data()["amount"] ?? 0,
-        time: queryDocumentSnapshot.data()['time']);
+        time: (queryDocumentSnapshot.data()['time'] as Timestamp).toDate());
   }
 
   Map<String, dynamic> toMap() {

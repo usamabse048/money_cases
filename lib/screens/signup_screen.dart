@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:money_cases/constants/controllers.dart';
+import 'package:money_cases/screens/home_screen.dart';
+import 'package:money_cases/screens/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   static String route = "/signupscreen";
@@ -212,11 +213,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: const Text("Sign Up"),
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {
-                                authController.signup(
-                                    email: _emailEditingController.text,
-                                    password: _passwordEditingController.text,
-                                    phoneNumber: _phoneEditingController.text,
-                                    name: _nameEditingController.text);
+                                try {
+                                  authController.signup(
+                                      email: _emailEditingController.text,
+                                      password: _passwordEditingController.text,
+                                      phoneNumber: _phoneEditingController.text,
+                                      name: _nameEditingController.text);
+                                  userController.bindAllUsers();
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      HomeScreen.route, (route) => false);
+                                } catch (ex) {
+                                  print(">>>" + ex.toString());
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                      "error: ",
+                                      // e.toString()
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ));
+                                }
                               } else {}
                             },
                           ),
@@ -239,8 +257,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     fontWeight: FontWeight.bold),
                               ),
                               onTap: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, "/", (route) => false);
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    LoginScreen.route, (route) => false);
                               },
                             )
                           ],
